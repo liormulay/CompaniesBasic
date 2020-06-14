@@ -68,6 +68,8 @@ public class CompaniesFragment extends Fragment {
             case R.id.item_add:
                     companiesViewModel.onItemAddChoose();
                 return true;
+            case R.id.item_delete:
+                companiesAdapter.clearList();
         }
         return super.onOptionsItemSelected(item);
     }

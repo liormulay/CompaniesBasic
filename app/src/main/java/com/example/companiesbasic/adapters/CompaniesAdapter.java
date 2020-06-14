@@ -43,4 +43,9 @@ public class CompaniesAdapter extends RecyclerView.Adapter<CompanyViewHolder> {
     public int getItemCount() {
         return companies == null ? 0 : companies.size();
     }
+
+    public void clearList() {
+        companies = null;
+        notifyDataSetChanged();
+    }
 }
