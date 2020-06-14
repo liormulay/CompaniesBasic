@@ -70,6 +70,10 @@ public class CompaniesFragment extends Fragment {
                 return true;
             case R.id.item_delete:
                 companiesAdapter.clearList();
+                return true;
+            case R.id.item_exit:
+                System.exit(0);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
