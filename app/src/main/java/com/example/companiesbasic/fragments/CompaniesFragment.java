@@ -3,6 +3,8 @@ package com.example.companiesbasic.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -31,6 +33,7 @@ public class CompaniesFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         companiesViewModel = new CompaniesViewModel();
         View view = inflater.inflate(R.layout.companies_fragment, container, false);
         initRecyclerCompanies(view);
@@ -48,6 +51,11 @@ public class CompaniesFragment extends Fragment {
         recyclerCompanies.setAdapter(companiesAdapter);
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.options_menu, menu);
+    }
 
     @Override
     public void onDestroyView() {
