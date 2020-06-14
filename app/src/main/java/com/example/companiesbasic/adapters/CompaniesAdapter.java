@@ -48,4 +48,9 @@ public class CompaniesAdapter extends RecyclerView.Adapter<CompanyViewHolder> {
         companies = null;
         notifyDataSetChanged();
     }
+
+    public void addCompany(Company company) {
+        companies.add(company);
+        notifyDataSetChanged();
+    }
 }

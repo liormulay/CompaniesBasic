@@ -18,6 +18,8 @@ public class CompaniesViewModel extends ViewModel {
 
     private BehaviorSubject<Integer> currentItem = BehaviorSubject.create();
 
+    private BehaviorSubject<Company> addItemBehaviorSubject = BehaviorSubject.create();
+
     public CompaniesViewModel() {
         companiesBehaviorSubject.onNext(companiesHolder.getCompanies());
     }
@@ -30,7 +32,16 @@ public class CompaniesViewModel extends ViewModel {
         return currentItem.hide();
     }
 
+    public Observable<Company> getAddItem(){
+        return addItemBehaviorSubject.hide();
+    }
+
     public void onItemAddChoose() {
         currentItem.onNext(1);
+    }
+
+    public void onItemAdd(Company company) {
+        addItemBehaviorSubject.onNext(company);
+        currentItem.onNext(0);
     }
 }

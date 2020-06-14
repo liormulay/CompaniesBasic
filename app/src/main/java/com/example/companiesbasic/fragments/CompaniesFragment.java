@@ -19,6 +19,7 @@ import com.example.companiesbasic.CompaniesViewModel;
 import com.example.companiesbasic.R;
 import com.example.companiesbasic.adapters.CompaniesAdapter;
 
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 
 public class CompaniesFragment extends Fragment {
@@ -29,7 +30,7 @@ public class CompaniesFragment extends Fragment {
 
     private CompaniesViewModel companiesViewModel;
 
-    private @io.reactivex.rxjava3.annotations.NonNull Disposable disposable = Disposable.disposed();
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
 
     public CompaniesFragment(CompaniesViewModel companiesViewModel) {
@@ -42,8 +43,10 @@ public class CompaniesFragment extends Fragment {
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.companies_fragment, container, false);
         initRecyclerCompanies(view);
-        disposable = companiesViewModel.getCompanies()
-                .subscribe(companies -> companiesAdapter.setCompanies(companies));
+        compositeDisposable.add(companiesViewModel.getCompanies()
+                .subscribe(companies -> companiesAdapter.setCompanies(companies)));
+        compositeDisposable.add(companiesViewModel.getAddItem()
+        .subscribe(company -> companiesAdapter.addCompany(company)));
         return view;
     }
 
@@ -66,7 +69,7 @@ public class CompaniesFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item_add:
-                    companiesViewModel.onItemAddChoose();
+                companiesViewModel.onItemAddChoose();
                 return true;
             case R.id.item_delete:
                 companiesAdapter.clearList();
@@ -80,7 +83,7 @@ public class CompaniesFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        disposable.dispose();
+        compositeDisposable.clear();
         super.onDestroyView();
     }
 }

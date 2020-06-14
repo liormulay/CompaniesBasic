@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         companiesFragment = new CompaniesFragment(companiesViewModel);
-        addCompanyFragment = new AddCompanyFragment();
+        addCompanyFragment = new AddCompanyFragment(companiesViewModel);
         companiesPagesAdapter = new CompaniesPagesAdapter(getSupportFragmentManager(), BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         viewPager = findViewById(R.id.container);
         setUpViewPager();
