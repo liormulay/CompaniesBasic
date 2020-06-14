@@ -15,11 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.companiesbasic.CompaniesViewModel;
 import com.example.companiesbasic.R;
 import com.example.companiesbasic.adapters.CompaniesAdapter;
-import com.example.companiesbasic.model.Company;
 
-import java.util.List;
-
-import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.rxjava3.disposables.Disposable;
 
 public class CompaniesFragment extends Fragment {
 
@@ -29,19 +26,16 @@ public class CompaniesFragment extends Fragment {
 
     private CompaniesViewModel companiesViewModel;
 
+    private @io.reactivex.rxjava3.annotations.NonNull Disposable disposable = Disposable.disposed();
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         companiesViewModel = new CompaniesViewModel();
         View view = inflater.inflate(R.layout.companies_fragment, container, false);
         initRecyclerCompanies(view);
-        companiesViewModel.getCompanies()
-                .subscribe(new Consumer<List<Company>>() {
-                    @Override
-                    public void accept(List<Company> companies) {
-                        companiesAdapter.setCompanies(companies);
-                    }
-                });
+        disposable = companiesViewModel.getCompanies()
+                .subscribe(companies -> companiesAdapter.setCompanies(companies));
         return view;
     }
 
@@ -52,5 +46,12 @@ public class CompaniesFragment extends Fragment {
         recyclerCompanies.setHasFixedSize(true);
         recyclerCompanies.setLayoutManager(new LinearLayoutManager(context));
         recyclerCompanies.setAdapter(companiesAdapter);
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        disposable.dispose();
+        super.onDestroyView();
     }
 }
