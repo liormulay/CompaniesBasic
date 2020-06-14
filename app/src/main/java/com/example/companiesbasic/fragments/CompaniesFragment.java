@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -30,11 +31,15 @@ public class CompaniesFragment extends Fragment {
 
     private @io.reactivex.rxjava3.annotations.NonNull Disposable disposable = Disposable.disposed();
 
+
+    public CompaniesFragment(CompaniesViewModel companiesViewModel) {
+        this.companiesViewModel = companiesViewModel;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        companiesViewModel = new CompaniesViewModel();
         View view = inflater.inflate(R.layout.companies_fragment, container, false);
         initRecyclerCompanies(view);
         disposable = companiesViewModel.getCompanies()
@@ -55,6 +60,16 @@ public class CompaniesFragment extends Fragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.options_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.item_add:
+                    companiesViewModel.onItemAddChoose();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -3,4 +3,6 @@
     <string name="add_company">add company</string>
     <string name="delete_companies">delete companies</string>
     <string name="exit">exit</string>
+    <string name="company_name">Company name</string>
+    <string name="address">Address</string>
 </resources>
