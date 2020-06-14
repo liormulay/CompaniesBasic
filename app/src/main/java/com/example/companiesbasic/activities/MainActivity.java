@@ -47,4 +47,10 @@ public class MainActivity extends AppCompatActivity {
         companiesPagesAdapter.addFragment(addCompanyFragment, "Add Company fragment");
         viewPager.setAdapter(companiesPagesAdapter);
     }
+
+    @Override
+    protected void onDestroy() {
+        compositeDisposable.clear();
+        super.onDestroy();
+    }
 }
