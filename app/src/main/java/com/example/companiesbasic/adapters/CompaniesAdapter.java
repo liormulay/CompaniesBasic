@@ -11,6 +11,7 @@ import com.example.companiesbasic.R;
 import com.example.companiesbasic.model.Company;
 import com.example.companiesbasic.view_holders.CompanyViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CompaniesAdapter extends RecyclerView.Adapter<CompanyViewHolder> {
@@ -45,7 +46,7 @@ public class CompaniesAdapter extends RecyclerView.Adapter<CompanyViewHolder> {
     }
 
     public void clearList() {
-        companies = null;
+        companies = new ArrayList<>();
         notifyDataSetChanged();
     }
 
