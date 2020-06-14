@@ -2,6 +2,8 @@ package com.example.companiesbasic.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,11 +43,26 @@ public class AddCompanyFragment extends Fragment {
     }
 
     private void onItemAdd() {
-        String companyName = nameEditText.getText().toString();
-        String address = addressEditText.getText().toString();
-        hideKeyboard(getActivity());
-        companiesViewModel.onItemAdd(new Company(companyName, address));
+        Editable nameEditable = nameEditText.getText();
+        Editable addressEditable = addressEditText.getText();
+        boolean isInvalid = false;
+        if (TextUtils.isEmpty(nameEditable)) {
+            nameEditText.setError("name is required");
+            isInvalid = true;
+        }
+        if (TextUtils.isEmpty(addressEditable)) {
+            addressEditText.setError("address required");
+            isInvalid = true;
+        }
+        if (!isInvalid) {
+            String address = addressEditable.toString();
+            String companyName = nameEditable.toString();
+            hideKeyboard(getActivity());
+            companiesViewModel.onItemAdd(new Company(companyName, address));
+        }
+
     }
+
 
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
